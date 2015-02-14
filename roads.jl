@@ -34,6 +34,8 @@ function intersects(a::road,b::road) #requires that 2 roads overlap
   return false
 end
 
+
+
 function islonely(a::road)
   if (a.start_y == a.end_y) && (a.start_x == a.end_x)
     return true
@@ -57,7 +59,7 @@ function merge(a::road,b::road)
               maximum([a.end_x,b.end_x]),maximum([a.end_y,b.end_y]),rand(Int64))
 end
 
-function merge_roads!(roads::Deque{road}) #empties roads of all elements
+function merge_roads!(roads::Deque{road}) #empties roads of all elements, returns Deque containing merged roads
   fixed = Deque{road}()
   hold = Deque{road}()
   while !isempty(hold) || !isempty(roads)
