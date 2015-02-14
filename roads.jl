@@ -10,6 +10,13 @@ type road #start coordinates are always closer to (1,1) than end coordinates
   net_id::Int64
 end
 
+type block #upper left corner is always closer to (1,1) than any other corner
+  x::Int64
+  y::Int64
+  dx::Int8
+  dy::Int8
+end
+
 function gen_test()
   hold = Deque{road}()
   push!(hold,road(5,3,5,3,rand(Int64)))
@@ -34,8 +41,6 @@ function intersects(a::road,b::road) #requires that 2 roads overlap
   return false
 end
 
-
-
 function islonely(a::road)
   if (a.start_y == a.end_y) && (a.start_x == a.end_x)
     return true
@@ -59,7 +64,7 @@ function merge(a::road,b::road)
               maximum([a.end_x,b.end_x]),maximum([a.end_y,b.end_y]),rand(Int64))
 end
 
-function merge_roads!(roads::Deque{road}) #empties roads of all elements, returns Deque containing merged roads
+function merge_roads!(roads::Deque{road}) #empties roads of all elements
   fixed = Deque{road}()
   hold = Deque{road}()
   while !isempty(hold) || !isempty(roads)
